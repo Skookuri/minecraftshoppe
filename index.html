@@ -107,7 +107,77 @@ img:hover {
 		<button class="w3-button" id="remove">-</button>
     </div>
 </div>
+<br>
+<div>
+<p>Shopping Cart</p>
+<!--when button click, take cartNumbers that are nonzero and multiply with diamond prices for total diamonds-->
+<ul id="shoppingCart">
+</ul>
+<script>
+const shoppingCart = [];
 
+function updateShoppingCart() {
+    let shoppingCartHTML = "";
+    let totalDiamonds = 0;
+    for (let i = 0; i < shoppingCart.length; i++) {
+        let item = shoppingCart[i];
+        if (item.cartNumber !== 0) {
+            shoppingCartHTML += "<li>" + item.name + " x " + item.cartNumber + " = " + (item.price * item.cartNumber) + " diamonds" + "</li>";
+            totalDiamonds += item.price * item.cartNumber;
+        }
+    }
+    if (shoppingCartHTML === "") {
+        shoppingCartHTML = "<li>No items in cart</li>";
+    }
+    shoppingCartHTML += "<li>Total: " + totalDiamonds + " diamonds</li>";
+    $("#shoppingCart").html(shoppingCartHTML);
+}
+
+$("#mending").on("click", "#add", function() {
+    let item = shoppingCart.find(i => i.name === "Mending Books");
+    if (item) {
+        item.cartNumber++;
+    } else {
+        shoppingCart.push({
+            name: "Mending Books",
+            price: 5,
+            cartNumber: 1
+        });
+    }
+    updateShoppingCart();
+});
+
+$("#mending").on("click", "#remove", function() {
+    let item = shoppingCart.find(i => i.name === "Mending Books");
+    if (item && item.cartNumber > 0) {
+        item.cartNumber--;
+    }
+    updateShoppingCart();
+});
+
+$("#netherite").on("click", "#add", function() {
+    let item = shoppingCart.find(i => i.name === "Netherite Ingots");
+    if (item) {
+        item.cartNumber++;
+    } else {
+        shoppingCart.push({
+            name: "Netherite Ingots",
+            price: 25,
+            cartNumber: 1
+        });
+    }
+    updateShoppingCart();
+});
+
+$("#netherite").on("click", "#remove", function() {
+    let item = shoppingCart.find(i => i.name === "Netherite Ingots");
+    if (item && item.cartNumber > 0) {
+        item.cartNumber--;
+    }
+    updateShoppingCart();
+});
+</script>
+</div>
 </body>
 <script>
 $(document).ready(function() {
