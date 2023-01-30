@@ -19,14 +19,26 @@ body {
 .w3-button {
 	background-color: #5e2f08;
 }
+
+.productCard {
+	background-color: #5e2f08;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    width: 500px;
+    height: 200px;
+    border-radius: 20px;
+    display: flex;
+	margin: 0 auto;
+}
 </style>
 </head>
 <body class="monospace">
 <h1>Welcome to My Shoppe!</h1>
 <p>Current Products:</p>
-<div class="productCard">
+
+<div class="productCard" id="mending">
 	<p>Mending Books</p>
 	<img src="https://stickershop.line-scdn.net/stickershop/v1/product/926/LINEStorePC/main.png" style="width:48px;height:48px;">
+    <p>Price: 10 diamonds</p>
     <p>In stock: </p>
     <p id="stockNumber">27</p>
     <p>In cart: </p>
@@ -38,22 +50,57 @@ body {
     </div>
 	<!--<img src="mendingbook.gif" style="width:48px;height:48px;">-->
 </div>
+
+<div class="productCard" id="netherite">
+	<p>Netherite Ingots</p>
+	<img src="https://lh3.googleusercontent.com/a5eoJOrFT6OPV9vAZpTjCtyWamxsbr4tngsWoFqgp4Uyn9g5kBTfX7OgRMpGOVMhlUZA1VXgtY9dWmuVSaN4wHeVZ_feRVYHsZQ=s400" style="width:60px;height:60px;">
+    <p>Price: 20 diamonds</p>
+    <p>In stock: </p>
+    <p id="stockNumber">3</p>
+    <p>In cart: </p>
+    <p id="cartNumber">0</p>
+	<p>Add to Cart:</p>
+    <div class="cardButtons">
+    	<button class="w3-button" id="add">+</button>
+		<button class="w3-button" id="remove">-</button>
+    </div>
+</div>
+
 </body>
 <script>
-//when plus button is clicked, add 'in cart' status- if in cart number equals in stock amt, remove plus sign
-$(document).ready(function(){
-  $("#add").click(function(){
-    var stock = $(this).parent().parent().children("#stockNumber").text();
-    var cart = parseInt($(this).parent().parent().children("#cartNumber").text());
-    cart++;
-    $(this).parent().parent().children("#cartNumber").html(cart);
-  });
-  $("#remove").click(function(){
-  	var stock = $(this).parent().parent().children("#stockNumber").text();
-    var cart = parseInt($(this).parent().parent().children("#cartNumber").text());
-    cart--;
-    $(this).parent().parent().children("#cartNumber").html(cart);
-  });
+$(document).ready(function() {
+    $(".productCard").each(function() {
+        var stock = parseInt($(this).find("#stockNumber").text());
+        var cart = parseInt($(this).find("#cartNumber").text());
+        $(this).find("#add").click(function() {
+            cart++;
+            $(this).parent().parent().find("#cartNumber").text(cart);
+            if (cart === stock) {
+                $(this).parent().parent().find("#add").hide();
+            }
+            $(this).parent().parent().find("#remove").show();
+        });
+
+        $(this).find("#remove").click(function() {
+            cart--;
+            $(this).parent().parent().find("#cartNumber").text(cart);
+            if (cart === 0) {
+                $(this).parent().parent().find("#remove").hide();
+            }
+            $(this).parent().parent().find("#add").show();
+        });
+
+        if (cart === 0) {
+            $(this).find("#remove").hide();
+        }
+        if (cart === stock) {
+            $(this).find("#add").hide();
+        }
+        
+        if (stock === 0) {
+        	$(this).hide();
+        }
+    });
 });
 </script>
 </html>
