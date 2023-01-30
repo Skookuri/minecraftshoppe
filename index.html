@@ -17,19 +17,32 @@ body {
 }
 
 .w3-button {
-	background-color: #5e2f08;
+	background-color: none;
+    display: none;
+}
+
+#addtocart {
+	display: none;
 }
 
 .productCard {
 	background-color: #5e2f08;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    width: 500px;
-
+    width: 300px;
     border-radius: 20px;
     display: flex;
 	margin: 0 auto;
     flex-direction: column;
     padding: 10px;
+    transition: 0.6s;
+    align-items: center;
+}
+
+.productCard:hover {
+    transform: scale(1.1);
+    transition: 0.6s;
+    background-color: white;
+    color: #5e2f08;
 }
 
 .cardButtons {
@@ -37,37 +50,58 @@ body {
     justify-content: center;
 }
 
+.productCard p, #stockNumber, #cartNumber {
+	display: inline-block;
+	margin: 0;
+}
+
+img {
+	width:130px;
+    height:130px;
+}
+
+img:hover {
+	transform: scale(1.3);
+    transition: 0.6s;
+}
 </style>
 </head>
 <body class="monospace">
-<h1>Welcome to My Shoppe!</h1>
+<h1>Welcome to Alyssa's Shoppe!</h1>
 <p>Current Products:</p>
 
 <div class="productCard" id="mending">
 	<p>Mending Books</p>
-	<img src="https://stickershop.line-scdn.net/stickershop/v1/product/926/LINEStorePC/main.png" style="width:48px;height:48px;">
+	<img src="https://stickershop.line-scdn.net/stickershop/v1/product/926/LINEStorePC/main.png">
     <p>Price: -- diamonds</p>
+    <div>
     <p>In stock: </p>
-    <p id="stockNumber">27</p>
-    <p>In cart: </p>
+    <p id="stockNumber">24</p>
+    </div>
+    <div>
+    <p class="label">In cart: </p>
     <p id="cartNumber">0</p>
-	<p>Add to Cart:</p>
+    </div>
+	<p id="addtocart">Add to Cart:</p>
     <div class="cardButtons">
     	<button class="w3-button" id="add">+</button>
 		<button class="w3-button" id="remove">-</button>
     </div>
-	<!--<img src="mendingbook.gif" style="width:48px;height:48px;">-->
 </div>
 <br>
 <div class="productCard" id="netherite">
 	<p>Netherite Ingots</p>
-	<img src="https://lh3.googleusercontent.com/a5eoJOrFT6OPV9vAZpTjCtyWamxsbr4tngsWoFqgp4Uyn9g5kBTfX7OgRMpGOVMhlUZA1VXgtY9dWmuVSaN4wHeVZ_feRVYHsZQ=s400" style="width:60px;height:60px;">
+	<img src="https://lh3.googleusercontent.com/a5eoJOrFT6OPV9vAZpTjCtyWamxsbr4tngsWoFqgp4Uyn9g5kBTfX7OgRMpGOVMhlUZA1VXgtY9dWmuVSaN4wHeVZ_feRVYHsZQ=s400">
     <p>Price: -- diamonds</p>
+    <div>
     <p>In stock: </p>
     <p id="stockNumber">3</p>
+    </div>
+    <div>
     <p>In cart: </p>
     <p id="cartNumber">0</p>
-	<p>Add to Cart:</p>
+    </div>
+	<p id="addtocart">Add to Cart:</p>
     <div class="cardButtons">
     	<button class="w3-button" id="add">+</button>
 		<button class="w3-button" id="remove">-</button>
@@ -77,37 +111,30 @@ body {
 </body>
 <script>
 $(document).ready(function() {
+    $(".productCard").hover(function() {
+    	$(this).find("#add").show();
+        $(this).find("#remove").show();
+        $(this).find("#addtocart").show();
+    }, function() {
+		$(this).find("#add").hide();
+		$(this).find("#remove").hide();
+        $(this).find("#addtocart").hide();
+	});
     $(".productCard").each(function() {
-        var stock = parseInt($(this).find("#stockNumber").text());
-        var cart = parseInt($(this).find("#cartNumber").text());
+        let stockCount = parseInt($(this).find("#stockNumber").text());
+        let cartCount = parseInt($(this).find("#cartNumber").text());
         $(this).find("#add").click(function() {
-            cart++;
-            $(this).parent().parent().find("#cartNumber").text(cart);
-            if (cart === stock) {
-                $(this).parent().parent().find("#add").hide();
+            if (cartCount < stockCount) {
+                cartCount++;
+                $(this).closest(".productCard").find("#cartNumber").text(cartCount);
             }
-            $(this).parent().parent().find("#remove").show();
         });
-
         $(this).find("#remove").click(function() {
-            cart--;
-            $(this).parent().parent().find("#cartNumber").text(cart);
-            if (cart === 0) {
-                $(this).parent().parent().find("#remove").hide();
+            if (cartCount > 0) {
+                cartCount--;
+                $(this).closest(".productCard").find("#cartNumber").text(cartCount);
             }
-            $(this).parent().parent().find("#add").show();
         });
-
-        if (cart === 0) {
-            $(this).find("#remove").hide();
-        }
-        if (cart === stock) {
-            $(this).find("#add").hide();
-        }
-        
-        if (stock === 0) {
-        	$(this).hide();
-        }
     });
 });
 </script>
