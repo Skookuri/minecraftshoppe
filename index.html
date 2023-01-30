@@ -4,16 +4,56 @@
 <title>Alyssa's Minecraft Shoppe</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
+.monospace{
+    font-family: 'Menlo', 'Lucida Console', 'Monaco', 'Consolas', monospace;
+}
+
+body {
+	color: white;
+    background-color: #974A0C;
+}
+
+.w3-button {
+	background-color: #5e2f08;
+}
 </style>
 </head>
-<body>
-
-<h1>Welcome to My Minecraft Shoppe!</h1>
+<body class="monospace">
+<h1>Welcome to My Shoppe!</h1>
 <p>Current Products:</p>
-<p>Mending Books</p>
-<img src="mendingbook.gif" style="width:48px;height:48px;">
-<p>
+<div class="productCard">
+	<p>Mending Books</p>
+	<img src="https://stickershop.line-scdn.net/stickershop/v1/product/926/LINEStorePC/main.png" style="width:48px;height:48px;">
+    <p>In stock: </p>
+    <p id="stockNumber">27</p>
+    <p>In cart: </p>
+    <p id="cartNumber">0</p>
+	<p>Add to Cart:</p>
+    <div class="cardButtons">
+    	<button class="w3-button" id="add">+</button>
+		<button class="w3-button" id="remove">-</button>
+    </div>
+	<!--<img src="mendingbook.gif" style="width:48px;height:48px;">-->
+</div>
 </body>
+<script>
+//when plus button is clicked, add 'in cart' status- if in cart number equals in stock amt, remove plus sign
+$(document).ready(function(){
+  $("#add").click(function(){
+    var stock = $(this).parent().parent().children("#stockNumber").text();
+    var cart = parseInt($(this).parent().parent().children("#cartNumber").text());
+    cart++;
+    $(this).parent().parent().children("#cartNumber").html(cart);
+  });
+  $("#remove").click(function(){
+  	var stock = $(this).parent().parent().children("#stockNumber").text();
+    var cart = parseInt($(this).parent().parent().children("#cartNumber").text());
+    cart--;
+    $(this).parent().parent().children("#cartNumber").html(cart);
+  });
+});
+</script>
 </html>
