@@ -70,9 +70,9 @@ img:hover {
 <h1>Welcome to Paige's Cake Shop!</h1>
 <p>Products:</p>
 
-<div class="productCard" id="mending">
+<div class="productCard" id="cake">
 	<p>Cakes</p>
-	<img src="https://stickershop.line-scdn.net/stickershop/v1/product/926/LINEStorePC/main.png">
+	<img src="https://www.seekpng.com/png/full/984-9844702_artas-minecrafts-minecraft-cake-in-game.png">
     <p>Price: -- diamonds</p>
     <div>
     <p>In stock: </p>
@@ -114,13 +114,13 @@ function updateShoppingCart() {
     $("#shoppingCart").html(shoppingCartHTML);
 }
 
-$("#mending").on("click", "#add", function() {
-    let item = shoppingCart.find(i => i.name === "Mending Books");
+$("#cake").on("click", "#add", function() {
+    let item = shoppingCart.find(i => i.name === "Cakes");
     if (item) {
         item.cartNumber++;
     } else {
         shoppingCart.push({
-            name: "Mending Books",
+            name: "Cakes",
             price: 5,
             cartNumber: 1
         });
@@ -128,30 +128,8 @@ $("#mending").on("click", "#add", function() {
     updateShoppingCart();
 });
 
-$("#mending").on("click", "#remove", function() {
-    let item = shoppingCart.find(i => i.name === "Mending Books");
-    if (item && item.cartNumber > 0) {
-        item.cartNumber--;
-    }
-    updateShoppingCart();
-});
-
-$("#netherite").on("click", "#add", function() {
-    let item = shoppingCart.find(i => i.name === "Netherite Ingots");
-    if (item) {
-        item.cartNumber++;
-    } else {
-        shoppingCart.push({
-            name: "Netherite Ingots",
-            price: 25,
-            cartNumber: 1
-        });
-    }
-    updateShoppingCart();
-});
-
-$("#netherite").on("click", "#remove", function() {
-    let item = shoppingCart.find(i => i.name === "Netherite Ingots");
+$("#cake").on("click", "#remove", function() {
+    let item = shoppingCart.find(i => i.name === "Cakes");
     if (item && item.cartNumber > 0) {
         item.cartNumber--;
     }
